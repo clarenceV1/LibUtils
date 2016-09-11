@@ -1,5 +1,7 @@
 package com.example.clarence.utillibrary;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by clarence on 3/27/16.
  */
@@ -87,7 +89,4 @@ public class StringUtils {
         return str == null ? null : str.trim();
     }
 
-    public static boolean equalsIgnoreCase(String str1, String str2) {
-        return str1 == null ? str2 == null : str1.equalsIgnoreCase(str2);
-    }
 }
