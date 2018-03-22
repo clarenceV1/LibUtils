@@ -1,32 +1,12 @@
 package com.example.clarence.utillibrary;
 
-import java.util.regex.Pattern;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by clarence on 3/27/16.
  */
 public class StringUtils {
-    /**
-     * <p>Checks if String contains a search String, handling <code>null</code>.
-     * This method uses {@link String#indexOf(String)}.</p>
-     * <p/>
-     * <p>A <code>null</code> String will return <code>false</code>.</p>
-     * <p/>
-     * <pre>
-     * StringUtils.contains(null, *)     = false
-     * StringUtils.contains(*, null)     = false
-     * StringUtils.contains("", "")      = true
-     * StringUtils.contains("abc", "")   = true
-     * StringUtils.contains("abc", "a")  = true
-     * StringUtils.contains("abc", "z")  = false
-     * </pre>
-     *
-     * @param str       the String to check, may be null
-     * @param searchStr the String to find, may be null
-     * @return true if the String contains the search String,
-     * false if not or <code>null</code> string input
-     * @since 2.0
-     */
+
     public static boolean contains(String str, String searchStr) {
         if (str == null || searchStr == null) {
             return false;
@@ -34,48 +14,10 @@ public class StringUtils {
         return str.indexOf(searchStr) >= 0;
     }
 
-    /**
-     * <p>Compares two Strings, returning <code>true</code> if they are equal.</p>
-     * <p/>
-     * <p><code>null</code>s are handled without exceptions. Two <code>null</code>
-     * references are considered to be equal. The comparison is case sensitive.</p>
-     * <p/>
-     * <pre>
-     * StringUtils.equals(null, null)   = true
-     * StringUtils.equals(null, "abc")  = false
-     * StringUtils.equals("abc", null)  = false
-     * StringUtils.equals("abc", "abc") = true
-     * StringUtils.equals("abc", "ABC") = false
-     * </pre>
-     *
-     * @param str1 the first String, may be null
-     * @param str2 the second String, may be null
-     * @return <code>true</code> if the Strings are equal, case sensitive, or
-     * both <code>null</code>
-     * @see String#equals(Object)
-     */
     public static boolean equals(String str1, String str2) {
         return str1 == null ? str2 == null : str1.equals(str2);
     }
 
-    /**
-     * <p>Checks if a String is empty ("") or null.</p>
-     * <p/>
-     * <pre>
-     * StringUtils.isEmpty(null)      = true
-     * StringUtils.isEmpty("")        = true
-     * StringUtils.isEmpty(" ")       = false
-     * StringUtils.isEmpty("bob")     = false
-     * StringUtils.isEmpty("  bob  ") = false
-     * </pre>
-     * <p/>
-     * <p>NOTE: This method changed in Lang version 2.0.
-     * It no longer trims the String.
-     * That functionality is available in isBlank().</p>
-     *
-     * @param str the String to check, may be null
-     * @return <code>true</code> if the String is empty or null
-     */
     public static boolean isEmpty(String str) {
         return str == null || str.length() == 0;
     }
@@ -89,4 +31,84 @@ public class StringUtils {
         return str == null ? null : str.trim();
     }
 
+    public static String buildString(Object... str) {
+        int size = str.length;
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < size; ++i) {
+            if (str[i] != null) {
+                builder.append(String.valueOf(str[i]));
+            }
+        }
+
+        return builder.toString();
+    }
+
+    public static boolean isNull(String str) {
+        return str == null || str.length() == 0 || str.equals("null");
+    }
+
+    public static String join(String[] array, String sep) {
+        if (array == null) {
+            return null;
+        }
+
+        int arraySize = array.length;
+        int sepSize = 0;
+        if (sep != null && !sep.equals("")) {
+            sepSize = sep.length();
+        }
+
+        int bufSize = (arraySize == 0 ? 0 : ((array[0] == null ? 16 : array[0].length()) + sepSize) * arraySize);
+        StringBuilder buf = new StringBuilder(bufSize);
+
+        for (int i = 0; i < arraySize; i++) {
+            if (i > 0) {
+                buf.append(sep);
+            }
+            if (array[i] != null) {
+                buf.append(array[i]);
+            }
+        }
+        return buf.toString();
+    }
+
+    public static String jsonJoin(String[] array) {
+        int arraySize = array.length;
+        int bufSize = arraySize * (array[0].length() + 3);
+        StringBuilder buf = new StringBuilder(bufSize);
+        for (int i = 0; i < arraySize; i++) {
+            if (i > 0) {
+                buf.append(',');
+            }
+
+            buf.append('"');
+            buf.append(array[i]);
+            buf.append('"');
+        }
+        return buf.toString();
+    }
+
+    public static byte[] utf8Bytes(String data) {
+        try {
+            return data.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || "".equals(s);
+    }
+
+    public static String strip(String s) {
+        StringBuilder b = new StringBuilder();
+        for (int i = 0, length = s.length(); i < length; i++) {
+            char c = s.charAt(i);
+            if (c > '\u001f' && c < '\u007f') {
+                b.append(c);
+            }
+        }
+        return b.toString();
+    }
 }

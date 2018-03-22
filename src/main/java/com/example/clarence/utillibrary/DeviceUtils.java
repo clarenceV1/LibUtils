@@ -127,7 +127,6 @@ public class DeviceUtils {
     public static String getDeviceId(Context contxet) {
         try {
             String ret = getMac(contxet);
-            LogUtils.d("DeviceUtils", "获取deviceId:" + ret);
             return ret;
         } catch (Exception ex) {
             ex.printStackTrace();

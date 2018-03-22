@@ -13,7 +13,7 @@ public class PackageUtils {
         try {
             return pm.getPackageInfo(context.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtils.e("PackageUtils.getPackageInfo", e.getLocalizedMessage());
+            e.printStackTrace();
         }
         return new PackageInfo();
     }

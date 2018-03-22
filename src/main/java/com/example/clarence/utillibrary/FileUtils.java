@@ -545,7 +545,7 @@ public class FileUtils {
             file.createNewFile();
             return file;
         } catch (Exception e) {
-            LogUtils.e("FileUtils.creatSDFile()", e.getLocalizedMessage());
+           e.printStackTrace();
         }
         return null;
 
