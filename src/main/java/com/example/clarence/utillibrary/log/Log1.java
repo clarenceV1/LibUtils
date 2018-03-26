@@ -8,34 +8,52 @@ import android.util.Log;
  */
 
 public class Log1 implements ILog {
+    private boolean isDebug = false;
+
+    protected Log1(Log1Build build) {
+        this.isDebug = build.isDebug();
+    }
 
     @Override
     public void error(String tag, String... msg) {
-        Log.e(tag, msg[0]);
+        if (isDebug) {
+            Log.e(tag, msg[0]);
+        }
     }
 
     @Override
     public void warn(String tag, String... msg) {
-        Log.w(tag, msg[0]);
+        if (isDebug) {
+            Log.w(tag, msg[0]);
+        }
     }
 
     @Override
     public void info(String tag, String... msg) {
-        Log.i(tag, msg[0]);
+        if (isDebug) {
+            Log.i(tag, msg[0]);
+        }
     }
 
     @Override
     public void debug(String tag, String... msg) {
-        Log.d(tag, msg[0]);
+        if (isDebug) {
+            Log.d(tag, msg[0]);
+        }
     }
 
     @Override
     public void verbose(String tag, String... msg) {
-        Log.v(tag, msg[0]);
+        if (isDebug) {
+            Log.v(tag, msg[0]);
+        }
     }
 
     @Override
     public void showLogPosition(String tag, String... msg) {
+        if (!isDebug) {
+            return;
+        }
         if (!TextUtils.isEmpty(msg[0])) {
             StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
             int currentIndex = -1;

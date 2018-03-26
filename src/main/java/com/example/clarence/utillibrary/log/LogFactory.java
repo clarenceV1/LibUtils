@@ -3,9 +3,9 @@ package com.example.clarence.utillibrary.log;
 import android.text.TextUtils;
 
 
-public class LogFactory implements ILog {
+public class LogFactory {
 
-    private boolean isDebug = false;
+
     private ILog iLog;
 
     private static class SingletonHolder {
@@ -16,30 +16,21 @@ public class LogFactory implements ILog {
 
     }
 
-    /**
-     * 初始化一次就够了
-     */
-    public void init(int type, boolean isDebug) {
-        this.isDebug = isDebug;
-        this.iLog = getLog(type);
-    }
-
-    private ILog getLog(int type) {
-        ILog iLog = null;
-        switch (type) {
-            case 1:
-                iLog = new Log1();
-                break;
-            default:
-
-                break;
-        }
-        return iLog;
-    }
 
     public static final LogFactory getInsatance() {
         return SingletonHolder.instance;
     }
+
+    /**
+     * 初始化一次就够了
+     */
+    public void init(LogBaseBuild build) {
+        if (iLog != null) {
+            return;
+        }
+        this.iLog = build.build();
+    }
+
 
     public static String getTag(String tag) {
         if (TextUtils.isEmpty(tag)) {
@@ -59,45 +50,10 @@ public class LogFactory implements ILog {
         return "msg is null";
     }
 
-    @Override
-    public void error(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.error(getTag(tag), getMsg(msg));
+    public ILog getiLog() {
+        if (iLog == null) {
+            throw new NullPointerException("hei ！iLog == null,u need com.cai.framework.manager.LogDock.initLog()");
         }
-    }
-
-    @Override
-    public void warn(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.warn(getTag(tag), getMsg(msg));
-        }
-    }
-
-    @Override
-    public void info(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.info(getTag(tag), getMsg(msg));
-        }
-    }
-
-    @Override
-    public void debug(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.debug(getTag(tag), getMsg(msg));
-        }
-    }
-
-    @Override
-    public void verbose(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.verbose(getTag(tag), getMsg(msg));
-        }
-    }
-
-    @Override
-    public void showLogPosition(String tag, String... msg) {
-        if (isDebug && iLog != null) {
-            iLog.showLogPosition(getTag(tag), getMsg(msg));
-        }
+        return iLog;
     }
 }
