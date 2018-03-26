@@ -21,7 +21,7 @@ public class LogFactory implements ILog {
      */
     public void init(int type, boolean isDebug) {
         this.isDebug = isDebug;
-        this.iLog = getLog(1);
+        this.iLog = getLog(type);
     }
 
     private ILog getLog(int type) {
@@ -31,7 +31,7 @@ public class LogFactory implements ILog {
                 iLog = new Log1();
                 break;
             default:
-                iLog = new Log1();
+
                 break;
         }
         return iLog;
@@ -61,42 +61,42 @@ public class LogFactory implements ILog {
 
     @Override
     public void error(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.error(getTag(tag), getMsg(msg));
         }
     }
 
     @Override
     public void warn(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.warn(getTag(tag), getMsg(msg));
         }
     }
 
     @Override
     public void info(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.info(getTag(tag), getMsg(msg));
         }
     }
 
     @Override
     public void debug(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.debug(getTag(tag), getMsg(msg));
         }
     }
 
     @Override
     public void verbose(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.verbose(getTag(tag), getMsg(msg));
         }
     }
 
     @Override
     public void showLogPosition(String tag, String... msg) {
-        if (isDebug) {
+        if (isDebug && iLog != null) {
             iLog.showLogPosition(getTag(tag), getMsg(msg));
         }
     }
