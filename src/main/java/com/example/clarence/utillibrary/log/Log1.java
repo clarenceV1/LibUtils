@@ -17,35 +17,35 @@ public class Log1 implements ILog {
     @Override
     public void error(String tag, String... msg) {
         if (isDebug) {
-            Log.e(tag, msg[0]);
+            Log.e(tag, LogFactory.getMsg(msg));
         }
     }
 
     @Override
     public void warn(String tag, String... msg) {
         if (isDebug) {
-            Log.w(tag, msg[0]);
+            Log.w(tag, LogFactory.getMsg(msg));
         }
     }
 
     @Override
     public void info(String tag, String... msg) {
         if (isDebug) {
-            Log.i(tag, msg[0]);
+            Log.i(tag, LogFactory.getMsg(msg));
         }
     }
 
     @Override
     public void debug(String tag, String... msg) {
         if (isDebug) {
-            Log.d(tag, msg[0]);
+            Log.d(tag, LogFactory.getMsg(msg));
         }
     }
 
     @Override
     public void verbose(String tag, String... msg) {
         if (isDebug) {
-            Log.v(tag, msg[0]);
+            Log.v(tag, LogFactory.getMsg(msg));
         }
     }
 
@@ -54,7 +54,7 @@ public class Log1 implements ILog {
         if (!isDebug) {
             return;
         }
-        if (!TextUtils.isEmpty(msg[0])) {
+        if (!TextUtils.isEmpty(LogFactory.getMsg(msg))) {
             StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
             int currentIndex = -1;
             for (int i = 0; i < stackTraceElement.length; i++) {
@@ -68,7 +68,7 @@ public class Log1 implements ILog {
                 String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
                 String methodName = stackTraceElement[currentIndex].getMethodName();
                 String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
-                error(tag, LogFactory.getMsg(msg[0], "\n---->at ", className, ".", methodName, "(", className, ".java:", lineNumber, ")"));
+                error(tag, LogFactory.getMsg(LogFactory.getMsg(msg), "\n---->at ", className, ".", methodName, "(", className, ".java:", lineNumber, ")"));
             } else {
                 error(tag, msg);
             }
