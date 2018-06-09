@@ -7,6 +7,10 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
 
+    public static String encryptMobile(String mobile) {
+        return buildString(mobile.substring(0, 3), "****", mobile.substring(7, mobile.length()));
+    }
+
     public static boolean contains(String str, String searchStr) {
         if (str == null || searchStr == null) {
             return false;
