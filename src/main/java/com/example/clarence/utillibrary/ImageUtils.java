@@ -1,8 +1,11 @@
 package com.example.clarence.utillibrary;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.ref.WeakReference;
 
 public class ImageUtils {
@@ -25,5 +28,17 @@ public class ImageUtils {
         WeakReference<Bitmap> weak = new WeakReference<Bitmap>(
                 BitmapFactory.decodeFile(path, opts));
         return Bitmap.createScaledBitmap(weak.get(), w, h, true);
+    }
+
+    public static Bitmap getBitmap(Context context, int resourceId) {
+        Resources res = context.getResources();
+        Bitmap bmp = BitmapFactory.decodeResource(res, resourceId);
+        return bmp;
+    }
+
+    public static byte[] bitmap2Bytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
     }
 }

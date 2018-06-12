@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 public class Md5Utils {
     /**
      * 计算字符串MD5值
+     *
      * @param string
      * @return
      */
@@ -18,10 +19,16 @@ public class Md5Utils {
         if (TextUtils.isEmpty(string)) {
             return "";
         }
-        MessageDigest md5 = null;
+        return md5(string.getBytes());
+    }
+
+    public static String md5(byte[] data) {
+        if (data == null) {
+            return "";
+        }
         try {
-            md5 = MessageDigest.getInstance("MD5");
-            byte[] bytes = md5.digest(string.getBytes());
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(data);
             String result = "";
             for (byte b : bytes) {
                 String temp = Integer.toHexString(b & 0xff);
@@ -39,6 +46,7 @@ public class Md5Utils {
 
     /**
      * 计算文件的MD5值
+     *
      * @param file
      * @return
      */
@@ -67,8 +75,8 @@ public class Md5Utils {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            if(null!=in){
+        } finally {
+            if (null != in) {
                 try {
                     in.close();
                 } catch (IOException e) {
