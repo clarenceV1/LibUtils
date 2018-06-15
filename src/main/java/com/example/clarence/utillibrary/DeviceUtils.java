@@ -231,56 +231,6 @@ public class DeviceUtils {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    /**
-     * 隐藏键盘
-     *
-     * @param activity
-     */
-    public static void hideKeyboard(Activity activity) {
-        try {
-            ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void hideKeyboard(Activity activity, View view) {
-        try {
-            ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 显示键盘
-     *
-     * @param activity
-     * @param view
-     */
-    public static void showkeyboard(Activity activity, View view) {
-        try {
-            ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(view, 0);
-        } catch (Exception e) {
-            e.printStackTrace();//
-        }
-    }
-
-
-    //是否显示了键盘
-    public static boolean isShowkeyboard(Context context) {
-        try {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            return imm.isActive();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
-
-    }
-
 
     public static String getMNC(Context context) {
         try {
