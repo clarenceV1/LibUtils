@@ -1,16 +1,36 @@
 package com.example.clarence.utillibrary;
 
+import android.text.TextUtils;
+
 import java.io.UnsupportedEncodingException;
 
 /**
  * Created by clarence on 3/27/16.
  */
 public class StringUtils {
-
+    /**
+     * 手机号加密
+     * @param mobile
+     * @return
+     */
     public static String encryptMobile(String mobile) {
+        if (TextUtils.isEmpty(mobile) || mobile.length() != 11) {
+            return mobile;
+        }
         return buildString(mobile.substring(0, 3), "****", mobile.substring(7, mobile.length()));
     }
 
+    /**
+     *  姓名加密
+     * @param name
+     * @return
+     */
+    public static String encryptName(String name) {
+        if (TextUtils.isEmpty(name) || name.length() <2) {
+            return name;
+        }
+        return buildString(name.substring(0, 1), "*", name.substring(2, name.length()));
+    }
     public static boolean contains(String str, String searchStr) {
         if (str == null || searchStr == null) {
             return false;
