@@ -202,33 +202,8 @@ public class DeviceUtils {
 
     }
 
-    /**
-     * dip到px的转换
-     *
-     * @param context
-     * @param dipValue
-     * @return
-     */
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
-    }
-
     public static int getMarginTopWithoutWave(Context context) {
-        return dip2px(context, 20);
-    }
-
-
-    /**
-     * px到dip的转换
-     *
-     * @param context
-     * @param pxValue
-     * @return
-     */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
+        return DimensUtils.dip2px(context, 20);
     }
 
 
@@ -351,7 +326,7 @@ public class DeviceUtils {
     }
 
     public static int getMarginTopWithWave(Context context) {
-        return DeviceUtils.dip2px(context, 4);
+        return DimensUtils.dip2px(context, 4);
     }
 
     /**
