@@ -68,9 +68,9 @@ public class Log1 implements ILog {
                 String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
                 String methodName = stackTraceElement[currentIndex].getMethodName();
                 String lineNumber = String.valueOf(stackTraceElement[currentIndex].getLineNumber());
-                error(tag, LogFactory.getMsg(LogFactory.getMsg(msg), "\n---->at ", className, ".", methodName, "(", className, ".java:", lineNumber, ")"));
+                debug(tag, LogFactory.getMsg(LogFactory.getMsg(msg), "\n---->at ", className, ".", methodName, "(", className, ".java:", lineNumber, ")"));
             } else {
-                error(tag, msg);
+                debug(tag, msg);
             }
         }
     }
