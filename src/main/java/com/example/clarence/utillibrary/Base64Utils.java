@@ -9,11 +9,11 @@ import java.io.FileOutputStream;
 public class Base64Utils {
 
     public static String encodeToString(String content) {
-        return Base64.encodeToString(content.getBytes(), Base64.DEFAULT);
+        return Base64.encodeToString(content.getBytes(), Base64.NO_WRAP);
     }
 
     public static String decodeToString(String encodedString) {
-        return new String(Base64.decode(encodedString, Base64.DEFAULT));
+        return new String(Base64.decode(encodedString, Base64.NO_WRAP));
     }
 
     public static String encodeToFile(File file) {
@@ -22,7 +22,7 @@ public class Base64Utils {
             byte[] buffer = new byte[(int) file.length()];
             inputFile.read(buffer);
             inputFile.close();
-            return Base64.encodeToString(buffer, Base64.DEFAULT);
+            return Base64.encodeToString(buffer, Base64.NO_WRAP);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class Base64Utils {
 
     public static String decodeToFile(File desFile, String encodedString) {
         try {
-            byte[] decodeBytes = Base64.decode(encodedString.getBytes(), Base64.DEFAULT);
+            byte[] decodeBytes = Base64.decode(encodedString.getBytes(), Base64.NO_WRAP);
             FileOutputStream fos = new FileOutputStream(desFile);
             fos.write(decodeBytes);
             fos.close();
