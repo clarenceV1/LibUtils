@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 
@@ -38,6 +39,11 @@ public class DeviceUtils {
             ex.printStackTrace();
         }
         return "";
+    }
+
+    public static boolean isFullScreen(Activity activity) {
+        return (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
     /**
