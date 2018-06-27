@@ -17,4 +17,9 @@ public class PackageUtils {
         }
         return new PackageInfo();
     }
+
+
+    public static String getVersionName(Context context) {
+        return getPackageInfo(context).versionName;
+    }
 }
