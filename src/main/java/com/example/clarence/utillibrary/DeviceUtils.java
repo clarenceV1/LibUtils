@@ -62,6 +62,7 @@ public class DeviceUtils {
      * @param context
      * @return
      */
+    @SuppressLint("MissingPermission")
     public static String getImei(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String id = "";
@@ -83,6 +84,7 @@ public class DeviceUtils {
         return android.os.Build.MODEL;
     }
 
+    @SuppressLint({"HardwareIds", "MissingPermission"})
     public static String getProvidersIMSI(Context mContext) {
         TelephonyManager mTelephonyManager = ((TelephonyManager) mContext
                 .getSystemService(Context.TELEPHONY_SERVICE));
@@ -209,7 +211,7 @@ public class DeviceUtils {
     }
 
     public static int getMarginTopWithoutWave(Context context) {
-        return DimensUtils.dip2px(context, 20);
+        return DimensUtils.dp2px(context, 20);
     }
 
 
@@ -332,7 +334,7 @@ public class DeviceUtils {
     }
 
     public static int getMarginTopWithWave(Context context) {
-        return DimensUtils.dip2px(context, 4);
+        return DimensUtils.dp2px(context, 4);
     }
 
     /**
