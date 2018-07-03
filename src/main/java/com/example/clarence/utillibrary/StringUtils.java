@@ -9,6 +9,24 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtils {
     /**
+     * 对浮点型数值进行格式化处理
+     * 2.00->2
+     * 2.10->2.1
+     * 2.12->2.12
+     * 2.01->2.01
+     *
+     * @param value
+     * @return
+     */
+    public static String formatNum(float value) {
+        String st = String.valueOf(value);
+        if (st.indexOf(".") != -1) {
+            st = st.replaceAll("0+?$", "");//去掉后面无用的零
+            st = st.replaceAll("[.]$", "");//如小数点后面全是零则去掉小数点
+        }
+        return st;
+    }
+    /**
      * 手机号加密
      * @param mobile
      * @return
