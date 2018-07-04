@@ -26,6 +26,20 @@ public class StringUtils {
         }
         return st;
     }
+
+    public static String formatColorText(String str, int color) {
+        if (str == null || str.trim().length() == 0) {
+            return str;
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<font color=");
+            sb.append(color);
+            sb.append(">");
+            sb.append(str);
+            sb.append("</font>");
+            return sb.toString();
+        }
+    }
     /**
      * 手机号加密
      * @param mobile
