@@ -3,11 +3,23 @@ package com.example.clarence.utillibrary;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by clarence on 3/27/16.
  */
 public class StringUtils {
+
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str!=null) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
     /**
      * 对浮点型数值进行格式化处理
      * 2.00->2
