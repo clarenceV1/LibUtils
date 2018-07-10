@@ -20,6 +20,18 @@ public class StringUtils {
         }
         return dest;
     }
+
+    public static String getSuffixName(String str) {
+        if (str == null || str.trim().length() == 0) {
+            return str;
+        }
+        int typeIndex = str.lastIndexOf(".");
+        if (typeIndex != -1) {
+            String type = str.substring(typeIndex + 1).toLowerCase();
+            return type;
+        }
+        return "";
+    }
     /**
      * 对浮点型数值进行格式化处理
      * 2.00->2

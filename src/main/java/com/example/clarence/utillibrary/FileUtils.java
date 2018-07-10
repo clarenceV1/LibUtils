@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
@@ -68,6 +70,61 @@ public class FileUtils {
                     f2.getName().toLowerCase());
         }
     };
+
+    public static String getApplicationId(Context appContext) throws IllegalArgumentException {
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = appContext.getPackageManager().getApplicationInfo(appContext.getPackageName(), PackageManager.GET_META_DATA);
+            if (applicationInfo == null) {
+                throw new IllegalArgumentException(" get application info = null, has no meta data! ");
+            }
+            Log.d("FileUtils", appContext.getPackageName() + " " + applicationInfo.metaData.getString("APP_ID"));
+            return applicationInfo.metaData.getString("APP_ID");
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalArgumentException(" get application info error! ", e);
+        }
+    }
+
+    /**
+     * 递归创建文件夹
+     *
+     * @param file
+     * @return 创建失败返回""
+     */
+    public static String createFile(File file) {
+        try {
+            if (file.getParentFile().exists()) {
+                Log.i("FileUtils", "----- 创建文件" + file.getAbsolutePath());
+                file.createNewFile();
+                return file.getAbsolutePath();
+            } else {
+                createDir(file.getParentFile().getAbsolutePath());
+                file.createNewFile();
+                Log.i("FileUtils", "----- 创建文件" + file.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 创建根缓存目录
+     *
+     * @return
+     */
+    public static String createRootPath(Context context) {
+        String cacheRootPath = "";
+        if (isSdCardAvailable()) {
+            // /sdcard/Android/data/<application package>/cache
+            cacheRootPath = context.getExternalCacheDir().getPath();
+        } else {
+            // /data/data/<application package>/cache
+            cacheRootPath = context.getCacheDir().getPath();
+        }
+        return cacheRootPath;
+    }
+
     /**
      * File (not directories) filter.
      *
@@ -200,6 +257,34 @@ public class FileUtils {
 
     public static boolean isLocalStorageDocument(Uri uri) {
         return LocalStorageProvider.AUTHORITY.equals(uri.getAuthority());
+    }
+
+    /**
+     * 递归创建文件夹
+     *
+     * @param dirPath
+     * @return 创建失败返回""
+     */
+    public static String createDir(String dirPath) {
+        try {
+            File file = new File(dirPath);
+            if (file.getParentFile().exists()) {
+                Log.i("file", "----- 创建文件夹" + file.getAbsolutePath());
+                file.mkdir();
+                return file.getAbsolutePath();
+            } else {
+                createDir(file.getParentFile().getAbsolutePath());
+                Log.i("file", "----- 创建文件夹" + file.getAbsolutePath());
+                file.mkdir();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dirPath;
+    }
+
+    public static boolean isSdCardAvailable() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     /**
@@ -501,6 +586,7 @@ public class FileUtils {
         }
         return bm;
     }
+
     /**
      * 删除文件
      *
@@ -511,6 +597,7 @@ public class FileUtils {
         File f = new File(path);
         return f.delete();
     }
+
     /**
      * 文件是否存在
      *
@@ -521,6 +608,7 @@ public class FileUtils {
         File file = new File(fileName);
         return file.exists();
     }
+
     /**
      * 创建目录
      *
@@ -545,7 +633,7 @@ public class FileUtils {
             file.createNewFile();
             return file;
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
 
