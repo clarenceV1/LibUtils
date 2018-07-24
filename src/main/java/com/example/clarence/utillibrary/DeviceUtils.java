@@ -13,10 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 
 import java.util.TimeZone;
 import java.util.UUID;
@@ -26,10 +23,6 @@ import java.util.UUID;
  * 获取设备相关信息
  */
 public class DeviceUtils {
-
-
-    private static WebView webview;
-    private static String strUA = "";
 
     public static String getAndroidId(Context context) {
         try {
