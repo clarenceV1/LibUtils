@@ -3,6 +3,7 @@ package com.example.clarence.utillibrary;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,7 @@ public class StringUtils {
 
     public static String replaceBlank(String str) {
         String dest = "";
-        if (str!=null) {
+        if (str != null) {
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
@@ -32,6 +33,7 @@ public class StringUtils {
         }
         return "";
     }
+
     /**
      * 对浮点型数值进行格式化处理
      * 2.00->2
@@ -43,7 +45,15 @@ public class StringUtils {
      * @return
      */
     public static String formatNum(float value) {
-        String st = String.valueOf(value);
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        String st;
+        try {
+            st = nf.format(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            st = String.valueOf(value);
+        }
         if (st.indexOf(".") != -1) {
             st = st.replaceAll("0+?$", "");//去掉后面无用的零
             st = st.replaceAll("[.]$", "");//如小数点后面全是零则去掉小数点
@@ -64,8 +74,10 @@ public class StringUtils {
             return sb.toString();
         }
     }
+
     /**
      * 手机号加密
+     *
      * @param mobile
      * @return
      */
@@ -77,16 +89,18 @@ public class StringUtils {
     }
 
     /**
-     *  姓名加密
+     * 姓名加密
+     *
      * @param name
      * @return
      */
     public static String encryptName(String name) {
-        if (TextUtils.isEmpty(name) || name.length() <2) {
+        if (TextUtils.isEmpty(name) || name.length() < 2) {
             return name;
         }
         return buildString(name.substring(0, 1), "*", name.substring(2, name.length()));
     }
+
     public static boolean contains(String str, String searchStr) {
         if (str == null || searchStr == null) {
             return false;
