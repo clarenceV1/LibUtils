@@ -3,6 +3,7 @@ package com.example.clarence.utillibrary;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -67,5 +68,18 @@ public class DateUtils {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static String[] WEEK = {"星期天","星期一","星期二","星期三","星期四","星期五","星期六"};
+    public static final int WEEKDAYS = 7;
+
+    public static String dateToWeek(long time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        int dayIndex = calendar.get(Calendar.DAY_OF_WEEK);
+        if (dayIndex < 1 || dayIndex > WEEKDAYS) {
+            return null;
+        }
+        return WEEK[dayIndex - 1];
     }
 }
