@@ -21,7 +21,7 @@ public class PackageUtils {
         PackageManager pm = context.getPackageManager();
         try {
             return pm.getPackageInfo(context.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new PackageInfo();
