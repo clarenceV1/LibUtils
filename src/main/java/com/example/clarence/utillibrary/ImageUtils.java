@@ -57,7 +57,7 @@ public class ImageUtils {
     /*
      * 保存文件，文件名为当前日期
      */
-    public static void saveBitmap(Context context,Bitmap bitmap, String bitName) {
+    public static String saveBitmap(Context context,Bitmap bitmap, String bitName) {
         String fileName;
         File file;
         if (Build.BRAND.equals("Xiaomi")) { // 小米手机
@@ -87,5 +87,6 @@ public class ImageUtils {
         }
         // 发送广播，通知刷新图库的显示
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + fileName)));
+        return fileName;
     }
 }
