@@ -23,6 +23,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.dependencies["android-support"]
 }
 
 repositories {
