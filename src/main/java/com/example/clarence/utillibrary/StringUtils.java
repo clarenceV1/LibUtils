@@ -1,6 +1,7 @@
 package com.example.clarence.utillibrary;
 
 import android.text.TextUtils;
+import android.widget.EditText;
 
 import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
@@ -119,6 +120,14 @@ public class StringUtils {
     public static String trimToNull(String str) {
         String ts = trim(str);
         return isEmpty(ts) ? null : ts;
+    }
+
+    public static String getString(EditText editText) {
+        if (editText == null) {
+            return "";
+        } else {
+            return editText.getText().toString().trim();
+        }
     }
 
     public static String trim(String str) {
