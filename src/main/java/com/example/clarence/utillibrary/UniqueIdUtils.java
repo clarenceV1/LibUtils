@@ -102,8 +102,7 @@ public class UniqueIdUtils {
     @SuppressLint({"HardwareIds", "MissingPermission"})
     private static String getIMEI(Context context) throws UniqueException {
         try {
-            TelephonyManager tm = (TelephonyManager) context
-                    .getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             return tm.getDeviceId().toLowerCase();
         } catch (Exception e) {
             throw new UniqueException(e);
@@ -119,8 +118,7 @@ public class UniqueIdUtils {
 
     private static String getMacId(Context context) throws UniqueException {
         try {
-            WifiManager wifi = (WifiManager) context
-                    .getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifi.getConnectionInfo();
             String address = info.getMacAddress();
             if (validMac(address)) {

@@ -12,6 +12,8 @@ public class NetWorkUtil {
 
     /**
      * 检测网络是否连接
+     * @param context 只能用application的context
+     * @return
      */
     public static boolean isNetConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
