@@ -19,7 +19,7 @@ public class NetWorkUtil {
             NetworkInfo[] infos = cm.getAllNetworkInfo();
             if (infos != null) {
                 for (NetworkInfo ni : infos) {
-                    if (ni.isConnected()) {
+                    if (ni.isConnected() && ni.isAvailable()) {
                         return true;
                     }
                 }
