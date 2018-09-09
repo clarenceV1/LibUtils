@@ -9,6 +9,12 @@ import java.util.Locale;
 
 public class DateUtils {
 
+    public static String getStringDateShort(Date currentTime) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        return dateString;
+    }
+
     public static String formatDate(long time, String format) {
         DateFormat dateFormat2 = new SimpleDateFormat(format, Locale.getDefault());
         String formatDate = dateFormat2.format(time);
