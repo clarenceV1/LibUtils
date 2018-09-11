@@ -16,7 +16,9 @@
 
 package com.example.clarence.utillibrary;
 
+import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -32,6 +34,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.SparseArray;
 import android.webkit.MimeTypeMap;
 
 
@@ -40,6 +43,7 @@ import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.text.DecimalFormat;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 /**
  * @author Peli
@@ -53,6 +57,99 @@ public class FileUtils {
     public static final String MIME_TYPE_VIDEO = "video/*";
     public static final String MIME_TYPE_APP = "application/*";
     public static final String HIDDEN_PREFIX = ".";
+
+
+
+    /**
+     * @param @param  type 图片为 pic 应用为 app
+     * @param @return 设定文件
+     * @return String    返回类型
+     * @throws
+     * @Title: getSaveFilePath
+     * @Description:
+     */
+    public static String getSaveFilePath(int saveType, Activity activity) {
+
+        String filePath = null;
+        switch (saveType) {
+            case PrivateConstant.FileInfo.TYPE_APP:
+                filePath = getRootFilePath(activity) + PrivateConstant.FileInfo.SAVE_APP_PATH;
+                break;
+            case PrivateConstant.FileInfo.TYPE_AUDIO_RECORD:
+                filePath = getRootFilePath(activity) + PrivateConstant.FileInfo.SAVE_AUDIO_RECORD_PATH;
+                break;
+            case PrivateConstant.FileInfo.TYPE_PHOTO:
+                filePath = getRootFilePath(activity) + PrivateConstant.FileInfo.SAVE_PHOTO_PATH;
+                break;
+            default:
+//                    LogUtils.e("保存的文件类型出错");
+                break;
+        }
+        if (!TextUtils.isEmpty(filePath)) {
+            createDirectory(filePath);
+        }
+        return filePath;
+    }
+
+    /**
+     * 创建文件目录
+     *
+     * @param filePath
+     * @return
+     */
+    public static boolean createDirectory(String filePath) {
+        if (fileIsExist(filePath)) {
+            return true;
+        } else {
+            File file = new File(filePath);
+            return file.mkdirs();
+        }
+    }
+
+    /**
+     * 文件是否存在
+     *
+     * @param filePath
+     * @return
+     */
+    public static boolean fileIsExist(String filePath) {
+        if (StringUtils.isEmpty(filePath)) {
+//            LogUtils.i("文件路径为空");
+            return false;
+        }
+        File file = new File(filePath);
+        if (!file.exists()) {
+//            LogUtils.i("文件不存在");
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * 获取文件保存根目录
+     *
+     * @return 如果有sdcard 则返回sdcard根路径，
+     * 如果没有则返回应用包下file目录/data/data/包名/file/
+     */
+    public static String getRootFilePath(Activity activity) {
+        String strPathHead;
+        if (isCanUseSD()) {
+            strPathHead = Environment.getExternalStorageDirectory().toString() + File.separator;
+        } else {
+            strPathHead = activity.getFilesDir().getPath() + File.separator;
+        }
+        return strPathHead;
+    }
+
+    public static boolean isCanUseSD() {
+        try {
+            return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+        } catch (Exception e) {
+//            Logger.i("sdcard不可用");
+        }
+        return false;
+    }
     /**
      * TAG for log messages.
      */
