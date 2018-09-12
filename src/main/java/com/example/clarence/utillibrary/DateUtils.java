@@ -88,4 +88,114 @@ public class DateUtils {
         }
         return WEEK[dayIndex - 1];
     }
+
+
+
+    /**
+     * @Description 时间戳转换成日期字符窜
+     * @date 2015/11/30
+     */
+    public static String getDateToString(long time, int parameters) {
+
+        SimpleDateFormat formatter = getSimpleDate(parameters);
+        if (formatter != null) {
+            Date date = new Date(time);
+            return formatter.format(date);
+        }
+        return "";
+
+    }
+
+    /**
+     * 字符串转时间戳
+     *
+     * @param timeString
+     * @return
+     */
+    public static Long strToTimestamp(String timeString, int parameters) {
+
+        SimpleDateFormat simpleDateFormat = getSimpleDate(parameters);
+        Date d;
+        try {
+            d = simpleDateFormat.parse(timeString);
+            return d.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+
+    public static SimpleDateFormat getSimpleDate(int parameters) {
+        SimpleDateFormat formatter = null;
+        switch (parameters) {
+            case 0:
+                formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+                break;
+            case 1:
+                formatter = new SimpleDateFormat("yyyy.MM.dd;HH:mm", Locale.getDefault());
+                break;
+            case 2:
+                formatter = new SimpleDateFormat("MM.dd;HH:mm", Locale.getDefault());
+                break;
+            case 3:
+                formatter = new SimpleDateFormat("yyyy.MM.dd;HH:mm:ss", Locale.getDefault());
+                break;
+            case 4:
+                formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                break;
+            case 5:
+                formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                break;
+            case 6:
+                formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                break;
+            case 7:
+                formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+                break;
+            case 8:
+                formatter = new SimpleDateFormat("yyyyMM", Locale.getDefault());
+                break;
+            case 9:
+                formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                break;
+            case 10:
+                formatter = new SimpleDateFormat("dd", Locale.getDefault());
+                break;
+            case 11:
+                formatter = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                break;
+        }
+        return formatter;
+    }
+
+
+
+    /**
+     * 获取两个日期所差的天数
+     *
+     * @param time1 大的时间
+     * @param time2 小的时间
+     * @return
+     */
+    public static long[] getTwoTimeOffset(long time1, long time2) {
+
+
+        SimpleDateFormat df = getSimpleDate(4);
+        try {
+            Date d1 = df.parse(getDateToString(time1, 4)); //
+            Date d2 = df.parse(getDateToString(time2, 4)); //
+            long diff = d1.getTime() - d2.getTime(); // 两个时间差,精确到毫秒
+
+            long day = diff / (1000 * 60 * 60 * 24); // 以天数为单位取整
+            long hour = (diff / (60 * 60 * 1000) - day * 24); // 以小时为单位取整
+            long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60); // 以分钟为单位取整
+            return new long[]{day, hour, min};
+//            long seconds = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
